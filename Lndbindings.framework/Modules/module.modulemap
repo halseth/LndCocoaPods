@@ -1,0 +1,8 @@
+framework module "Lndbindings" {
+	header "ref.h"
+    header "Lndbindings.objc.h"
+    header "Universe.objc.h"
+    header "Lndbindings.h"
+
+    export *
+}
