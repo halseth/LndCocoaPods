@@ -14,7 +14,7 @@
 		0419E01820753B4400B25F35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0419E01620753B4400B25F35 /* LaunchScreen.storyboard */; };
 		0419E02320753B4400B25F35 /* LndCocoaPodsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419E02220753B4400B25F35 /* LndCocoaPodsTests.swift */; };
 		0419E02E20753B4400B25F35 /* LndCocoaPodsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419E02D20753B4400B25F35 /* LndCocoaPodsUITests.swift */; };
-		04A2835320753EB900AF5C43 /* Lndbindings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A2835220753EB900AF5C43 /* Lndbindings.framework */; };
+		0463272C2098695700391D3E /* Lndmobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0463272B2098695700391D3E /* Lndmobile.framework */; };
 		04A2835620753EC900AF5C43 /* rpc.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A2835420753EC800AF5C43 /* rpc.grpc.swift */; };
 		04A2835720753EC900AF5C43 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A2835520753EC800AF5C43 /* rpc.pb.swift */; };
 		04A2835920753F7E00AF5C43 /* lnd.conf in Resources */ = {isa = PBXBuildFile; fileRef = 04A2835820753F7D00AF5C43 /* lnd.conf */; };
@@ -54,7 +54,7 @@
 		0419E02920753B4400B25F35 /* LndCocoaPodsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LndCocoaPodsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0419E02D20753B4400B25F35 /* LndCocoaPodsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LndCocoaPodsUITests.swift; sourceTree = "<group>"; };
 		0419E02F20753B4400B25F35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		04A2835220753EB900AF5C43 /* Lndbindings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Lndbindings.framework; sourceTree = "<group>"; };
+		0463272B2098695700391D3E /* Lndmobile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Lndmobile.framework; sourceTree = "<group>"; };
 		04A2835420753EC800AF5C43 /* rpc.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.grpc.swift; sourceTree = SOURCE_ROOT; };
 		04A2835520753EC800AF5C43 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = SOURCE_ROOT; };
 		04A2835820753F7D00AF5C43 /* lnd.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lnd.conf; sourceTree = SOURCE_ROOT; };
@@ -74,8 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0463272C2098695700391D3E /* Lndmobile.framework in Frameworks */,
 				5F67D83ED5359F6D2818D7F0 /* Pods_LndCocoaPods.framework in Frameworks */,
-				04A2835320753EB900AF5C43 /* Lndbindings.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +170,7 @@
 		86FC8D7C9F010662EB70A477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				04A2835220753EB900AF5C43 /* Lndbindings.framework */,
+				0463272B2098695700391D3E /* Lndmobile.framework */,
 				A3FC49008EEF3921EC77D0C2 /* Pods_LndCocoaPods.framework */,
 				15E6DC4436EBEC9274E024D4 /* Pods_LndCocoaPodsTests.framework */,
 				9AA3F1354A15FD05C9C50295 /* Pods_LndCocoaPodsUITests.framework */,

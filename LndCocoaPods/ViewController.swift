@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Lndbindings
+import Lndmobile
 
 class ViewController: UIViewController {
 
