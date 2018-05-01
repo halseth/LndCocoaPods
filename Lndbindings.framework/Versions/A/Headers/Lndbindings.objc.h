@@ -10,6 +10,71 @@
 #include "Universe.objc.h"
 
 
-FOUNDATION_EXPORT void LndbindingsStart(NSString* appDir);
+@protocol LndbindingsCallback;
+@class LndbindingsCallback;
+@protocol LndbindingsSendStream;
+@class LndbindingsSendStream;
+
+@protocol LndbindingsCallback <NSObject>
+- (void)onError:(NSError*)p0;
+- (void)onResponse:(NSData*)p0;
+@end
+
+@protocol LndbindingsSendStream <NSObject>
+- (BOOL)send:(NSData*)p0 error:(NSError**)error;
+- (BOOL)stop:(NSError**)error;
+@end
+
+/**
+ * GetInfo takes a serialized GetInfoRequest and returns single serialized
+GetInfoResponse to the provided callback.
+ */
+FOUNDATION_EXPORT void LndbindingsGetInfo(NSData* msg, id<LndbindingsCallback> callback);
+
+/**
+ * SendPayment opens a bidirectional payment stream to the server, letting the
+caller send serialized SendRequests on the returned SendStream. Serialized
+SendResponses will be delivered to the provided callback.
+ */
+FOUNDATION_EXPORT id<LndbindingsSendStream> LndbindingsSendPayment(id<LndbindingsCallback> callback, NSError** error);
+
+FOUNDATION_EXPORT void LndbindingsStart(NSString* appDir, id<LndbindingsCallback> callback);
+
+/**
+ * SubscribeInvoices takes a serialized InvoiceSubscription and returns a
+stream of Invoices to the provided callback.
+ */
+FOUNDATION_EXPORT void LndbindingsSubscribeInvoices(NSData* msg, id<LndbindingsCallback> callback);
+
+@class LndbindingsCallback;
+
+@class LndbindingsSendStream;
+
+/**
+ * Callback is an interface that is passed in by callers of the library, and
+specifies where the responses should be deliver.
+ */
+@interface LndbindingsCallback : NSObject <goSeqRefInterface, LndbindingsCallback> {
+}
+@property(strong, readonly) id _ref;
+
+- (instancetype)initWithRef:(id)ref;
+- (void)onError:(NSError*)p0;
+- (void)onResponse:(NSData*)p0;
+@end
+
+/**
+ * SendStream is an interface that the caller of the library can use to send
+requests to the server during the execution of a bidirectional streaming RPC
+call, or stop the stream.
+ */
+@interface LndbindingsSendStream : NSObject <goSeqRefInterface, LndbindingsSendStream> {
+}
+@property(strong, readonly) id _ref;
+
+- (instancetype)initWithRef:(id)ref;
+- (BOOL)send:(NSData*)p0 error:(NSError**)error;
+- (BOOL)stop:(NSError**)error;
+@end
 
 #endif

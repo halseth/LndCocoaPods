@@ -66,9 +66,9 @@ class ViewController: UIViewController {
 
         appDir = dir
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            LndbindingsStart(dir)
-        }
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            LndbindingsStart(dir)
+//        }
 
         let button = UIButton(frame: CGRect(x: 50, y: 50, width: 200, height: 50))
         button.backgroundColor = .green

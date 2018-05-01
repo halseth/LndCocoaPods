@@ -25,10 +25,16 @@ import Dispatch
 import SwiftGRPC
 import SwiftProtobuf
 
-internal protocol Lnrpc_WalletUnlockerCreateWalletCall: ClientCallUnary {}
+internal protocol Lnrpc_WalletUnlockerGenSeedCall: ClientCallUnary {}
 
-fileprivate final class Lnrpc_WalletUnlockerCreateWalletCallBase: ClientCallUnaryBase<Lnrpc_CreateWalletRequest, Lnrpc_CreateWalletResponse>, Lnrpc_WalletUnlockerCreateWalletCall {
-  override class var method: String { return "/lnrpc.WalletUnlocker/CreateWallet" }
+fileprivate final class Lnrpc_WalletUnlockerGenSeedCallBase: ClientCallUnaryBase<Lnrpc_GenSeedRequest, Lnrpc_GenSeedResponse>, Lnrpc_WalletUnlockerGenSeedCall {
+  override class var method: String { return "/lnrpc.WalletUnlocker/GenSeed" }
+}
+
+internal protocol Lnrpc_WalletUnlockerInitWalletCall: ClientCallUnary {}
+
+fileprivate final class Lnrpc_WalletUnlockerInitWalletCallBase: ClientCallUnaryBase<Lnrpc_InitWalletRequest, Lnrpc_InitWalletResponse>, Lnrpc_WalletUnlockerInitWalletCall {
+  override class var method: String { return "/lnrpc.WalletUnlocker/InitWallet" }
 }
 
 internal protocol Lnrpc_WalletUnlockerUnlockWalletCall: ClientCallUnary {}
@@ -41,9 +47,14 @@ fileprivate final class Lnrpc_WalletUnlockerUnlockWalletCallBase: ClientCallUnar
 /// Instantiate Lnrpc_WalletUnlockerServiceClient, then call methods of this protocol to make API calls.
 internal protocol Lnrpc_WalletUnlockerService: ServiceClient {
   /// Synchronous. Unary.
-  func createWallet(_ request: Lnrpc_CreateWalletRequest) throws -> Lnrpc_CreateWalletResponse
+  func genSeed(_ request: Lnrpc_GenSeedRequest) throws -> Lnrpc_GenSeedResponse
   /// Asynchronous. Unary.
-  func createWallet(_ request: Lnrpc_CreateWalletRequest, completion: @escaping (Lnrpc_CreateWalletResponse?, CallResult) -> Void) throws -> Lnrpc_WalletUnlockerCreateWalletCall
+  func genSeed(_ request: Lnrpc_GenSeedRequest, completion: @escaping (Lnrpc_GenSeedResponse?, CallResult) -> Void) throws -> Lnrpc_WalletUnlockerGenSeedCall
+
+  /// Synchronous. Unary.
+  func initWallet(_ request: Lnrpc_InitWalletRequest) throws -> Lnrpc_InitWalletResponse
+  /// Asynchronous. Unary.
+  func initWallet(_ request: Lnrpc_InitWalletRequest, completion: @escaping (Lnrpc_InitWalletResponse?, CallResult) -> Void) throws -> Lnrpc_WalletUnlockerInitWalletCall
 
   /// Synchronous. Unary.
   func unlockWallet(_ request: Lnrpc_UnlockWalletRequest) throws -> Lnrpc_UnlockWalletResponse
@@ -54,13 +65,24 @@ internal protocol Lnrpc_WalletUnlockerService: ServiceClient {
 
 internal final class Lnrpc_WalletUnlockerServiceClient: ServiceClientBase, Lnrpc_WalletUnlockerService {
   /// Synchronous. Unary.
-  internal func createWallet(_ request: Lnrpc_CreateWalletRequest) throws -> Lnrpc_CreateWalletResponse {
-    return try Lnrpc_WalletUnlockerCreateWalletCallBase(channel)
+  internal func genSeed(_ request: Lnrpc_GenSeedRequest) throws -> Lnrpc_GenSeedResponse {
+    return try Lnrpc_WalletUnlockerGenSeedCallBase(channel)
       .run(request: request, metadata: metadata)
   }
   /// Asynchronous. Unary.
-  internal func createWallet(_ request: Lnrpc_CreateWalletRequest, completion: @escaping (Lnrpc_CreateWalletResponse?, CallResult) -> Void) throws -> Lnrpc_WalletUnlockerCreateWalletCall {
-    return try Lnrpc_WalletUnlockerCreateWalletCallBase(channel)
+  internal func genSeed(_ request: Lnrpc_GenSeedRequest, completion: @escaping (Lnrpc_GenSeedResponse?, CallResult) -> Void) throws -> Lnrpc_WalletUnlockerGenSeedCall {
+    return try Lnrpc_WalletUnlockerGenSeedCallBase(channel)
+      .start(request: request, metadata: metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func initWallet(_ request: Lnrpc_InitWalletRequest) throws -> Lnrpc_InitWalletResponse {
+    return try Lnrpc_WalletUnlockerInitWalletCallBase(channel)
+      .run(request: request, metadata: metadata)
+  }
+  /// Asynchronous. Unary.
+  internal func initWallet(_ request: Lnrpc_InitWalletRequest, completion: @escaping (Lnrpc_InitWalletResponse?, CallResult) -> Void) throws -> Lnrpc_WalletUnlockerInitWalletCall {
+    return try Lnrpc_WalletUnlockerInitWalletCallBase(channel)
       .start(request: request, metadata: metadata, completion: completion)
   }
 
@@ -167,7 +189,7 @@ fileprivate final class Lnrpc_LightningGetInfoCallBase: ClientCallUnaryBase<Lnrp
 
 internal protocol Lnrpc_LightningPendingChannelsCall: ClientCallUnary {}
 
-fileprivate final class Lnrpc_LightningPendingChannelsCallBase: ClientCallUnaryBase<Lnrpc_PendingChannelRequest, Lnrpc_PendingChannelResponse>, Lnrpc_LightningPendingChannelsCall {
+fileprivate final class Lnrpc_LightningPendingChannelsCallBase: ClientCallUnaryBase<Lnrpc_PendingChannelsRequest, Lnrpc_PendingChannelsResponse>, Lnrpc_LightningPendingChannelsCall {
   override class var method: String { return "/lnrpc.Lightning/PendingChannels" }
 }
 
@@ -326,12 +348,6 @@ fileprivate final class Lnrpc_LightningSubscribeChannelGraphCallBase: ClientCall
   override class var method: String { return "/lnrpc.Lightning/SubscribeChannelGraph" }
 }
 
-internal protocol Lnrpc_LightningSetAliasCall: ClientCallUnary {}
-
-fileprivate final class Lnrpc_LightningSetAliasCallBase: ClientCallUnaryBase<Lnrpc_SetAliasRequest, Lnrpc_SetAliasResponse>, Lnrpc_LightningSetAliasCall {
-  override class var method: String { return "/lnrpc.Lightning/SetAlias" }
-}
-
 internal protocol Lnrpc_LightningDebugLevelCall: ClientCallUnary {}
 
 fileprivate final class Lnrpc_LightningDebugLevelCallBase: ClientCallUnaryBase<Lnrpc_DebugLevelRequest, Lnrpc_DebugLevelResponse>, Lnrpc_LightningDebugLevelCall {
@@ -344,10 +360,16 @@ fileprivate final class Lnrpc_LightningFeeReportCallBase: ClientCallUnaryBase<Ln
   override class var method: String { return "/lnrpc.Lightning/FeeReport" }
 }
 
-internal protocol Lnrpc_LightningUpdateFeesCall: ClientCallUnary {}
+internal protocol Lnrpc_LightningUpdateChannelPolicyCall: ClientCallUnary {}
 
-fileprivate final class Lnrpc_LightningUpdateFeesCallBase: ClientCallUnaryBase<Lnrpc_FeeUpdateRequest, Lnrpc_FeeUpdateResponse>, Lnrpc_LightningUpdateFeesCall {
-  override class var method: String { return "/lnrpc.Lightning/UpdateFees" }
+fileprivate final class Lnrpc_LightningUpdateChannelPolicyCallBase: ClientCallUnaryBase<Lnrpc_PolicyUpdateRequest, Lnrpc_PolicyUpdateResponse>, Lnrpc_LightningUpdateChannelPolicyCall {
+  override class var method: String { return "/lnrpc.Lightning/UpdateChannelPolicy" }
+}
+
+internal protocol Lnrpc_LightningForwardingHistoryCall: ClientCallUnary {}
+
+fileprivate final class Lnrpc_LightningForwardingHistoryCallBase: ClientCallUnaryBase<Lnrpc_ForwardingHistoryRequest, Lnrpc_ForwardingHistoryResponse>, Lnrpc_LightningForwardingHistoryCall {
+  override class var method: String { return "/lnrpc.Lightning/ForwardingHistory" }
 }
 
 
@@ -424,9 +446,9 @@ internal protocol Lnrpc_LightningService: ServiceClient {
   func getInfo(_ request: Lnrpc_GetInfoRequest, completion: @escaping (Lnrpc_GetInfoResponse?, CallResult) -> Void) throws -> Lnrpc_LightningGetInfoCall
 
   /// Synchronous. Unary.
-  func pendingChannels(_ request: Lnrpc_PendingChannelRequest) throws -> Lnrpc_PendingChannelResponse
+  func pendingChannels(_ request: Lnrpc_PendingChannelsRequest) throws -> Lnrpc_PendingChannelsResponse
   /// Asynchronous. Unary.
-  func pendingChannels(_ request: Lnrpc_PendingChannelRequest, completion: @escaping (Lnrpc_PendingChannelResponse?, CallResult) -> Void) throws -> Lnrpc_LightningPendingChannelsCall
+  func pendingChannels(_ request: Lnrpc_PendingChannelsRequest, completion: @escaping (Lnrpc_PendingChannelsResponse?, CallResult) -> Void) throws -> Lnrpc_LightningPendingChannelsCall
 
   /// Synchronous. Unary.
   func listChannels(_ request: Lnrpc_ListChannelsRequest) throws -> Lnrpc_ListChannelsResponse
@@ -529,11 +551,6 @@ internal protocol Lnrpc_LightningService: ServiceClient {
   func subscribeChannelGraph(_ request: Lnrpc_GraphTopologySubscription, completion: ((CallResult) -> Void)?) throws -> Lnrpc_LightningSubscribeChannelGraphCall
 
   /// Synchronous. Unary.
-  func setAlias(_ request: Lnrpc_SetAliasRequest) throws -> Lnrpc_SetAliasResponse
-  /// Asynchronous. Unary.
-  func setAlias(_ request: Lnrpc_SetAliasRequest, completion: @escaping (Lnrpc_SetAliasResponse?, CallResult) -> Void) throws -> Lnrpc_LightningSetAliasCall
-
-  /// Synchronous. Unary.
   func debugLevel(_ request: Lnrpc_DebugLevelRequest) throws -> Lnrpc_DebugLevelResponse
   /// Asynchronous. Unary.
   func debugLevel(_ request: Lnrpc_DebugLevelRequest, completion: @escaping (Lnrpc_DebugLevelResponse?, CallResult) -> Void) throws -> Lnrpc_LightningDebugLevelCall
@@ -544,9 +561,14 @@ internal protocol Lnrpc_LightningService: ServiceClient {
   func feeReport(_ request: Lnrpc_FeeReportRequest, completion: @escaping (Lnrpc_FeeReportResponse?, CallResult) -> Void) throws -> Lnrpc_LightningFeeReportCall
 
   /// Synchronous. Unary.
-  func updateFees(_ request: Lnrpc_FeeUpdateRequest) throws -> Lnrpc_FeeUpdateResponse
+  func updateChannelPolicy(_ request: Lnrpc_PolicyUpdateRequest) throws -> Lnrpc_PolicyUpdateResponse
   /// Asynchronous. Unary.
-  func updateFees(_ request: Lnrpc_FeeUpdateRequest, completion: @escaping (Lnrpc_FeeUpdateResponse?, CallResult) -> Void) throws -> Lnrpc_LightningUpdateFeesCall
+  func updateChannelPolicy(_ request: Lnrpc_PolicyUpdateRequest, completion: @escaping (Lnrpc_PolicyUpdateResponse?, CallResult) -> Void) throws -> Lnrpc_LightningUpdateChannelPolicyCall
+
+  /// Synchronous. Unary.
+  func forwardingHistory(_ request: Lnrpc_ForwardingHistoryRequest) throws -> Lnrpc_ForwardingHistoryResponse
+  /// Asynchronous. Unary.
+  func forwardingHistory(_ request: Lnrpc_ForwardingHistoryRequest, completion: @escaping (Lnrpc_ForwardingHistoryResponse?, CallResult) -> Void) throws -> Lnrpc_LightningForwardingHistoryCall
 
 }
 
@@ -703,12 +725,12 @@ internal final class Lnrpc_LightningServiceClient: ServiceClientBase, Lnrpc_Ligh
   }
 
   /// Synchronous. Unary.
-  internal func pendingChannels(_ request: Lnrpc_PendingChannelRequest) throws -> Lnrpc_PendingChannelResponse {
+  internal func pendingChannels(_ request: Lnrpc_PendingChannelsRequest) throws -> Lnrpc_PendingChannelsResponse {
     return try Lnrpc_LightningPendingChannelsCallBase(channel)
       .run(request: request, metadata: metadata)
   }
   /// Asynchronous. Unary.
-  internal func pendingChannels(_ request: Lnrpc_PendingChannelRequest, completion: @escaping (Lnrpc_PendingChannelResponse?, CallResult) -> Void) throws -> Lnrpc_LightningPendingChannelsCall {
+  internal func pendingChannels(_ request: Lnrpc_PendingChannelsRequest, completion: @escaping (Lnrpc_PendingChannelsResponse?, CallResult) -> Void) throws -> Lnrpc_LightningPendingChannelsCall {
     return try Lnrpc_LightningPendingChannelsCallBase(channel)
       .start(request: request, metadata: metadata, completion: completion)
   }
@@ -919,17 +941,6 @@ internal final class Lnrpc_LightningServiceClient: ServiceClientBase, Lnrpc_Ligh
   }
 
   /// Synchronous. Unary.
-  internal func setAlias(_ request: Lnrpc_SetAliasRequest) throws -> Lnrpc_SetAliasResponse {
-    return try Lnrpc_LightningSetAliasCallBase(channel)
-      .run(request: request, metadata: metadata)
-  }
-  /// Asynchronous. Unary.
-  internal func setAlias(_ request: Lnrpc_SetAliasRequest, completion: @escaping (Lnrpc_SetAliasResponse?, CallResult) -> Void) throws -> Lnrpc_LightningSetAliasCall {
-    return try Lnrpc_LightningSetAliasCallBase(channel)
-      .start(request: request, metadata: metadata, completion: completion)
-  }
-
-  /// Synchronous. Unary.
   internal func debugLevel(_ request: Lnrpc_DebugLevelRequest) throws -> Lnrpc_DebugLevelResponse {
     return try Lnrpc_LightningDebugLevelCallBase(channel)
       .run(request: request, metadata: metadata)
@@ -952,13 +963,24 @@ internal final class Lnrpc_LightningServiceClient: ServiceClientBase, Lnrpc_Ligh
   }
 
   /// Synchronous. Unary.
-  internal func updateFees(_ request: Lnrpc_FeeUpdateRequest) throws -> Lnrpc_FeeUpdateResponse {
-    return try Lnrpc_LightningUpdateFeesCallBase(channel)
+  internal func updateChannelPolicy(_ request: Lnrpc_PolicyUpdateRequest) throws -> Lnrpc_PolicyUpdateResponse {
+    return try Lnrpc_LightningUpdateChannelPolicyCallBase(channel)
       .run(request: request, metadata: metadata)
   }
   /// Asynchronous. Unary.
-  internal func updateFees(_ request: Lnrpc_FeeUpdateRequest, completion: @escaping (Lnrpc_FeeUpdateResponse?, CallResult) -> Void) throws -> Lnrpc_LightningUpdateFeesCall {
-    return try Lnrpc_LightningUpdateFeesCallBase(channel)
+  internal func updateChannelPolicy(_ request: Lnrpc_PolicyUpdateRequest, completion: @escaping (Lnrpc_PolicyUpdateResponse?, CallResult) -> Void) throws -> Lnrpc_LightningUpdateChannelPolicyCall {
+    return try Lnrpc_LightningUpdateChannelPolicyCallBase(channel)
+      .start(request: request, metadata: metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func forwardingHistory(_ request: Lnrpc_ForwardingHistoryRequest) throws -> Lnrpc_ForwardingHistoryResponse {
+    return try Lnrpc_LightningForwardingHistoryCallBase(channel)
+      .run(request: request, metadata: metadata)
+  }
+  /// Asynchronous. Unary.
+  internal func forwardingHistory(_ request: Lnrpc_ForwardingHistoryRequest, completion: @escaping (Lnrpc_ForwardingHistoryResponse?, CallResult) -> Void) throws -> Lnrpc_LightningForwardingHistoryCall {
+    return try Lnrpc_LightningForwardingHistoryCallBase(channel)
       .start(request: request, metadata: metadata, completion: completion)
   }
 
@@ -966,13 +988,18 @@ internal final class Lnrpc_LightningServiceClient: ServiceClientBase, Lnrpc_Ligh
 
 /// To build a server, implement a class that conforms to this protocol.
 internal protocol Lnrpc_WalletUnlockerProvider {
-  func createWallet(request: Lnrpc_CreateWalletRequest, session: Lnrpc_WalletUnlockerCreateWalletSession) throws -> Lnrpc_CreateWalletResponse
+  func genSeed(request: Lnrpc_GenSeedRequest, session: Lnrpc_WalletUnlockerGenSeedSession) throws -> Lnrpc_GenSeedResponse
+  func initWallet(request: Lnrpc_InitWalletRequest, session: Lnrpc_WalletUnlockerInitWalletSession) throws -> Lnrpc_InitWalletResponse
   func unlockWallet(request: Lnrpc_UnlockWalletRequest, session: Lnrpc_WalletUnlockerUnlockWalletSession) throws -> Lnrpc_UnlockWalletResponse
 }
 
-internal protocol Lnrpc_WalletUnlockerCreateWalletSession: ServerSessionUnary {}
+internal protocol Lnrpc_WalletUnlockerGenSeedSession: ServerSessionUnary {}
 
-fileprivate final class Lnrpc_WalletUnlockerCreateWalletSessionBase: ServerSessionUnaryBase<Lnrpc_CreateWalletRequest, Lnrpc_CreateWalletResponse>, Lnrpc_WalletUnlockerCreateWalletSession {}
+fileprivate final class Lnrpc_WalletUnlockerGenSeedSessionBase: ServerSessionUnaryBase<Lnrpc_GenSeedRequest, Lnrpc_GenSeedResponse>, Lnrpc_WalletUnlockerGenSeedSession {}
+
+internal protocol Lnrpc_WalletUnlockerInitWalletSession: ServerSessionUnary {}
+
+fileprivate final class Lnrpc_WalletUnlockerInitWalletSessionBase: ServerSessionUnaryBase<Lnrpc_InitWalletRequest, Lnrpc_InitWalletResponse>, Lnrpc_WalletUnlockerInitWalletSession {}
 
 internal protocol Lnrpc_WalletUnlockerUnlockWalletSession: ServerSessionUnary {}
 
@@ -1002,10 +1029,16 @@ internal final class Lnrpc_WalletUnlockerServer: ServiceServer {
   internal override func handleMethod(_ method: String, handler: Handler, queue: DispatchQueue) throws -> Bool {
     let provider = self.provider
     switch method {
-    case "/lnrpc.WalletUnlocker/CreateWallet":
-      try Lnrpc_WalletUnlockerCreateWalletSessionBase(
+    case "/lnrpc.WalletUnlocker/GenSeed":
+      try Lnrpc_WalletUnlockerGenSeedSessionBase(
         handler: handler,
-        providerBlock: { try provider.createWallet(request: $0, session: $1 as! Lnrpc_WalletUnlockerCreateWalletSessionBase) })
+        providerBlock: { try provider.genSeed(request: $0, session: $1 as! Lnrpc_WalletUnlockerGenSeedSessionBase) })
+          .run(queue: queue)
+      return true
+    case "/lnrpc.WalletUnlocker/InitWallet":
+      try Lnrpc_WalletUnlockerInitWalletSessionBase(
+        handler: handler,
+        providerBlock: { try provider.initWallet(request: $0, session: $1 as! Lnrpc_WalletUnlockerInitWalletSessionBase) })
           .run(queue: queue)
       return true
     case "/lnrpc.WalletUnlocker/UnlockWallet":
@@ -1036,7 +1069,7 @@ internal protocol Lnrpc_LightningProvider {
   func disconnectPeer(request: Lnrpc_DisconnectPeerRequest, session: Lnrpc_LightningDisconnectPeerSession) throws -> Lnrpc_DisconnectPeerResponse
   func listPeers(request: Lnrpc_ListPeersRequest, session: Lnrpc_LightningListPeersSession) throws -> Lnrpc_ListPeersResponse
   func getInfo(request: Lnrpc_GetInfoRequest, session: Lnrpc_LightningGetInfoSession) throws -> Lnrpc_GetInfoResponse
-  func pendingChannels(request: Lnrpc_PendingChannelRequest, session: Lnrpc_LightningPendingChannelsSession) throws -> Lnrpc_PendingChannelResponse
+  func pendingChannels(request: Lnrpc_PendingChannelsRequest, session: Lnrpc_LightningPendingChannelsSession) throws -> Lnrpc_PendingChannelsResponse
   func listChannels(request: Lnrpc_ListChannelsRequest, session: Lnrpc_LightningListChannelsSession) throws -> Lnrpc_ListChannelsResponse
   func openChannelSync(request: Lnrpc_OpenChannelRequest, session: Lnrpc_LightningOpenChannelSyncSession) throws -> Lnrpc_ChannelPoint
   func openChannel(request: Lnrpc_OpenChannelRequest, session: Lnrpc_LightningOpenChannelSession) throws
@@ -1057,10 +1090,10 @@ internal protocol Lnrpc_LightningProvider {
   func getNetworkInfo(request: Lnrpc_NetworkInfoRequest, session: Lnrpc_LightningGetNetworkInfoSession) throws -> Lnrpc_NetworkInfo
   func stopDaemon(request: Lnrpc_StopRequest, session: Lnrpc_LightningStopDaemonSession) throws -> Lnrpc_StopResponse
   func subscribeChannelGraph(request: Lnrpc_GraphTopologySubscription, session: Lnrpc_LightningSubscribeChannelGraphSession) throws
-  func setAlias(request: Lnrpc_SetAliasRequest, session: Lnrpc_LightningSetAliasSession) throws -> Lnrpc_SetAliasResponse
   func debugLevel(request: Lnrpc_DebugLevelRequest, session: Lnrpc_LightningDebugLevelSession) throws -> Lnrpc_DebugLevelResponse
   func feeReport(request: Lnrpc_FeeReportRequest, session: Lnrpc_LightningFeeReportSession) throws -> Lnrpc_FeeReportResponse
-  func updateFees(request: Lnrpc_FeeUpdateRequest, session: Lnrpc_LightningUpdateFeesSession) throws -> Lnrpc_FeeUpdateResponse
+  func updateChannelPolicy(request: Lnrpc_PolicyUpdateRequest, session: Lnrpc_LightningUpdateChannelPolicySession) throws -> Lnrpc_PolicyUpdateResponse
+  func forwardingHistory(request: Lnrpc_ForwardingHistoryRequest, session: Lnrpc_LightningForwardingHistorySession) throws -> Lnrpc_ForwardingHistoryResponse
 }
 
 internal protocol Lnrpc_LightningWalletBalanceSession: ServerSessionUnary {}
@@ -1130,7 +1163,7 @@ fileprivate final class Lnrpc_LightningGetInfoSessionBase: ServerSessionUnaryBas
 
 internal protocol Lnrpc_LightningPendingChannelsSession: ServerSessionUnary {}
 
-fileprivate final class Lnrpc_LightningPendingChannelsSessionBase: ServerSessionUnaryBase<Lnrpc_PendingChannelRequest, Lnrpc_PendingChannelResponse>, Lnrpc_LightningPendingChannelsSession {}
+fileprivate final class Lnrpc_LightningPendingChannelsSessionBase: ServerSessionUnaryBase<Lnrpc_PendingChannelsRequest, Lnrpc_PendingChannelsResponse>, Lnrpc_LightningPendingChannelsSession {}
 
 internal protocol Lnrpc_LightningListChannelsSession: ServerSessionUnary {}
 
@@ -1262,10 +1295,6 @@ internal protocol Lnrpc_LightningSubscribeChannelGraphSession: ServerSessionServ
 
 fileprivate final class Lnrpc_LightningSubscribeChannelGraphSessionBase: ServerSessionServerStreamingBase<Lnrpc_GraphTopologySubscription, Lnrpc_GraphTopologyUpdate>, Lnrpc_LightningSubscribeChannelGraphSession {}
 
-internal protocol Lnrpc_LightningSetAliasSession: ServerSessionUnary {}
-
-fileprivate final class Lnrpc_LightningSetAliasSessionBase: ServerSessionUnaryBase<Lnrpc_SetAliasRequest, Lnrpc_SetAliasResponse>, Lnrpc_LightningSetAliasSession {}
-
 internal protocol Lnrpc_LightningDebugLevelSession: ServerSessionUnary {}
 
 fileprivate final class Lnrpc_LightningDebugLevelSessionBase: ServerSessionUnaryBase<Lnrpc_DebugLevelRequest, Lnrpc_DebugLevelResponse>, Lnrpc_LightningDebugLevelSession {}
@@ -1274,9 +1303,13 @@ internal protocol Lnrpc_LightningFeeReportSession: ServerSessionUnary {}
 
 fileprivate final class Lnrpc_LightningFeeReportSessionBase: ServerSessionUnaryBase<Lnrpc_FeeReportRequest, Lnrpc_FeeReportResponse>, Lnrpc_LightningFeeReportSession {}
 
-internal protocol Lnrpc_LightningUpdateFeesSession: ServerSessionUnary {}
+internal protocol Lnrpc_LightningUpdateChannelPolicySession: ServerSessionUnary {}
 
-fileprivate final class Lnrpc_LightningUpdateFeesSessionBase: ServerSessionUnaryBase<Lnrpc_FeeUpdateRequest, Lnrpc_FeeUpdateResponse>, Lnrpc_LightningUpdateFeesSession {}
+fileprivate final class Lnrpc_LightningUpdateChannelPolicySessionBase: ServerSessionUnaryBase<Lnrpc_PolicyUpdateRequest, Lnrpc_PolicyUpdateResponse>, Lnrpc_LightningUpdateChannelPolicySession {}
+
+internal protocol Lnrpc_LightningForwardingHistorySession: ServerSessionUnary {}
+
+fileprivate final class Lnrpc_LightningForwardingHistorySessionBase: ServerSessionUnaryBase<Lnrpc_ForwardingHistoryRequest, Lnrpc_ForwardingHistoryResponse>, Lnrpc_LightningForwardingHistorySession {}
 
 
 /// Main server for generated service
@@ -1512,12 +1545,6 @@ internal final class Lnrpc_LightningServer: ServiceServer {
         providerBlock: { try provider.subscribeChannelGraph(request: $0, session: $1 as! Lnrpc_LightningSubscribeChannelGraphSessionBase) })
           .run(queue: queue)
       return true
-    case "/lnrpc.Lightning/SetAlias":
-      try Lnrpc_LightningSetAliasSessionBase(
-        handler: handler,
-        providerBlock: { try provider.setAlias(request: $0, session: $1 as! Lnrpc_LightningSetAliasSessionBase) })
-          .run(queue: queue)
-      return true
     case "/lnrpc.Lightning/DebugLevel":
       try Lnrpc_LightningDebugLevelSessionBase(
         handler: handler,
@@ -1530,10 +1557,16 @@ internal final class Lnrpc_LightningServer: ServiceServer {
         providerBlock: { try provider.feeReport(request: $0, session: $1 as! Lnrpc_LightningFeeReportSessionBase) })
           .run(queue: queue)
       return true
-    case "/lnrpc.Lightning/UpdateFees":
-      try Lnrpc_LightningUpdateFeesSessionBase(
+    case "/lnrpc.Lightning/UpdateChannelPolicy":
+      try Lnrpc_LightningUpdateChannelPolicySessionBase(
         handler: handler,
-        providerBlock: { try provider.updateFees(request: $0, session: $1 as! Lnrpc_LightningUpdateFeesSessionBase) })
+        providerBlock: { try provider.updateChannelPolicy(request: $0, session: $1 as! Lnrpc_LightningUpdateChannelPolicySessionBase) })
+          .run(queue: queue)
+      return true
+    case "/lnrpc.Lightning/ForwardingHistory":
+      try Lnrpc_LightningForwardingHistorySessionBase(
+        handler: handler,
+        providerBlock: { try provider.forwardingHistory(request: $0, session: $1 as! Lnrpc_LightningForwardingHistorySessionBase) })
           .run(queue: queue)
       return true
     default:
