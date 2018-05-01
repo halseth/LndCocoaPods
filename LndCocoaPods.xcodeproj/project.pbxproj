@@ -327,7 +327,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "source ~/.zshrc\nrm -r $SRCROOT/Lndbindings.framework\ncp -r $GOPATH/src/github.com/lightningnetwork/lnd/mobile/build/ios/Lndbindings.framework $SRCROOT/Lndbindings.framework\ncp $GOPATH/src/github.com/lightningnetwork/lnd/lnrpc/*.swift $SRCROOT";
+			shellScript = "source ~/.zshrc\nrm -r $SRCROOT/Lndmobile.framework\ncp -r $GOPATH/src/github.com/lightningnetwork/lnd/mobile/build/ios/Lndmobile.framework $SRCROOT/Lndmobile.framework\ncp $GOPATH/src/github.com/lightningnetwork/lnd/lnrpc/*.swift $SRCROOT";
 		};
 		118C43DA7B3D38D8799167D4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
