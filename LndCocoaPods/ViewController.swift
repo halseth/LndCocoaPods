@@ -42,33 +42,23 @@ class ViewController: UIViewController {
             return
         }
 
-        let certUrl = URL(fileURLWithPath: dir+"/tls.cert")
-
-        do {
-            try filemgr.removeItem(at: certUrl)
-        }
-        catch let error as NSError {
-            print("Error deleting tls.cert: \(error)")
-        }
-
-        let keyUrl = URL(fileURLWithPath: dir+"/tls.key")
-
-        do {
-            try filemgr.removeItem(at: keyUrl)
-        }
-        catch let error as NSError {
-            print("Error deleting tls.key: \(error)")
-        }
-
         print("Current dir: \(dir)")
         print("conf dir: \(path)")
         print("conf: \(tt)")
 
         appDir = dir
 
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            LndbindingsStart(dir)
-//        }
+        class Callback: NSObject, LndmobileCallbackProtocol {
+            func onError(_ p0: Error!) {
+                print("error")
+            }
+
+            func onResponse(_ p0: Data!) {
+                print("started")
+            }
+        }
+
+        LndmobileStart(dir, Callback())
 
         let button = UIButton(frame: CGRect(x: 50, y: 50, width: 200, height: 50))
         button.backgroundColor = .green
@@ -81,39 +71,22 @@ class ViewController: UIViewController {
     func buttonPressed() {
 
         print("Button tapped")
-        let certUrl = URL(fileURLWithPath: appDir+"/tls.cert")
-        let macaroonUrl = URL(fileURLWithPath: appDir+"/admin.macaroon")
-        print("certUrl: \(certUrl). Macaroon: \(macaroonUrl)")
-//        let certificateURL = Bundle.main.url(forResource: "tls",
-//                                             withExtension: "cert")
-//        print("cert url: \(certificateURL)")
-        let certificates = try! String(contentsOf: certUrl)
 
-        print("certificates: \(certificates)")
-
-        let macaroonData = try! Data(contentsOf: macaroonUrl)
-
-
-        let client = Lnrpc_LightningServiceClient(address: "localhost:10009", certificates: certificates, host: nil)
-        client.metadata.add(key: "macaroon", value: macaroonData.hexEncodedString())
         let getInfo = Lnrpc_GetInfoRequest()
+        let data = try! getInfo.serializedData()
 
-//        let resp = try? client.getInfo(getInfo)
+        class Callback: NSObject, LndmobileCallbackProtocol {
+            func onError(_ p0: Error!) {
+                print("error")
+            }
 
-        do {
-            let resp = try client.getInfo(getInfo)
-            print("response: \(resp)")
-//        _ = try client.getInfo(getInfo) { responseMessage, callResult in
-//            if let responseMessage = responseMessage {
-//                print("got response \(responseMessage)")
-//            } else {
-//                print("No response received. \(callResult)")
-//            }
-//        }
-        } catch {
-            print("catch: \(error)")
+            func onResponse(_ p0: Data!) {
+                let info = try! Lnrpc_GetInfoResponse(serializedData: p0)
+                print("info: \(info)")
+            }
         }
-//        print("response \(resp)")
+
+        LndmobileGetInfo(data, Callback())
         print("button done")
 
     }
