@@ -99,12 +99,16 @@ class ViewController: UIViewController {
             }
         }
 
-        print("data len: \(data.count)")
+
+        print("data: \(data.hexEncodedString())")
+        for d in data {
+            print("swift: \(d)")
+        }
 
         LndmobileNewAddress(data, Callback())
 //        LndmobileGetNodeInfo(data, Callback())
 //        LndmobileGetInfo(data, Callback())
-        print("button done")
+//        print("button done")
 
     }
 
