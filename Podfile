@@ -6,7 +6,7 @@ target 'LndCocoaPods' do
   use_frameworks!
 
   # Pods for LndCocoaPods
-  pod 'SwiftGRPC', :git => 'git@github.com:grpc/grpc-swift.git', :commit => '5ebf7a3'
+  pod 'SwiftProtobuf', '~> 1.0'
 
   target 'LndCocoaPodsTests' do
     inherit! :search_paths

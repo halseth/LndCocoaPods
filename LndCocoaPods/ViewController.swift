@@ -72,21 +72,38 @@ class ViewController: UIViewController {
 
         print("Button tapped")
 
-        let getInfo = Lnrpc_GetInfoRequest()
-        let data = try! getInfo.serializedData()
+        var addr = Lnrpc_NewAddressRequest()
+        addr.type = Lnrpc_NewAddressRequest.AddressType.nestedPubkeyHash
+//
+        let data = try! addr.serializedData()
+
+//        let nodeInfo = Lnrpc_NodeInfoRequest.with {
+//            $0.pubKey = "022bb78ab9df617aeaaf37f6644609abb7295fad0c20327bccd41f8d69173ccb49"
+//        }
+////        nodeInfo.pubKey = "022bb78ab9df617aeaaf37f6644609abb7295fad0c20327bccd41f8d69173ccb49"
+//
+//        let getInfo = Lnrpc_GetInfoRequest()
+//        let data = try! nodeInfo.serializedData()
+//        let data = try! getInfo.serializedData()
 
         class Callback: NSObject, LndmobileCallbackProtocol {
             func onError(_ p0: Error!) {
-                print("error")
+                print("error: \(p0)")
             }
 
             func onResponse(_ p0: Data!) {
-                let info = try! Lnrpc_GetInfoResponse(serializedData: p0)
+//                let info = try! Lnrpc_GetInfoResponse(serializedData: p0)
+//                let info = try! Lnrpc_NodeInfo(serializedData: p0)
+                let info = try! Lnrpc_NewAddressResponse(serializedData: p0)
                 print("info: \(info)")
             }
         }
 
-        LndmobileGetInfo(data, Callback())
+        print("data len: \(data.count)")
+
+        LndmobileNewAddress(data, Callback())
+//        LndmobileGetNodeInfo(data, Callback())
+//        LndmobileGetInfo(data, Callback())
         print("button done")
 
     }
